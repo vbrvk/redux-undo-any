@@ -13,7 +13,6 @@ const replaceState = state => ({
   state
 });
 
-
 const hackReducer = reducer => (state, action) => {
   if (action.type === REPLACE_STATE_ACTION) {
     return action.state;

@@ -30,8 +30,5 @@
   },
   "peerDependencies": {
     "redux": "^4.0.0"
-  },
-  "dependencies": {
-    "redux": "^4.0.0"
   }
 }
