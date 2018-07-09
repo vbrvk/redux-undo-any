@@ -47,11 +47,11 @@ const createStoreCreator = ({
     // hack dispatch
     const originDispatch = store.dispatch;
     const dispatch = (action) => {
-      if (action.type !== REPLACE_STATE_ACTION) history.push(action);
       if (history.length > actionHistorySize) {
         lastState = reducer(lastState, history[0]);
         history.shift();
       }
+      if (action.type !== REPLACE_STATE_ACTION) history.push(action);
 
       if (action.type === UNDO_ACTION) {
         if (action.test) {

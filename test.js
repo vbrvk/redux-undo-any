@@ -58,4 +58,49 @@ describe('Store', () => {
     const state = store.getState();
     expect(state.counter).toBe(-1);
   });
+
+  test('Should work with maxActionHistory', () => {
+    const createStore = createStoreCreator({ actionHistorySize: 15 });
+    const store = createStore(reducer);
+
+    for (let i = 0; i < 10; i += 1) {
+      store.dispatch({
+        type: INC
+      });
+    }
+
+    for (let i = 0; i < 5; i += 1) {
+      store.dispatch({
+        type: DEC
+      });
+    }
+    let state = store.getState();
+    expect(state.counter).toBe(5);
+
+    store.dispatch(undoAction(action => action.type === INC)); // should undo all INC
+
+    state = store.getState();
+    expect(state.counter).toBe(-5);
+  });
+
+  test('Shouldn\'t undo actions older maxActionHistory', () => {
+    const createStore = createStoreCreator({ actionHistorySize: 5 });
+    const store = createStore(reducer);
+
+    for (let i = 0; i < 10; i += 1) {
+      store.dispatch({
+        type: INC
+      });
+    }
+
+    for (let i = 0; i < 5; i += 1) {
+      store.dispatch({
+        type: DEC
+      });
+    }
+    store.dispatch(undoAction(action => action.type === INC)); // should undo all INC
+
+    const state = store.getState();
+    expect(state.counter).toBe(5);
+  });
 });
