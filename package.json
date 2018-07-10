@@ -2,9 +2,10 @@
   "name": "redux-undo-any",
   "version": "0.0.1",
   "description": "Library that allow you to undo any redux action, not only last",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "transpile": "babel src --out-file ./lib/index.js"
   },
   "keywords": [
     "redux",
@@ -15,10 +16,12 @@
   "author": "https://github.com/borovik96",
   "license": "MIT",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.5",
     "babel-jest": "^23.2.0",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-minify": "^0.4.3",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-import": "^2.13.0",
