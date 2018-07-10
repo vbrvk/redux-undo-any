@@ -26,6 +26,8 @@ const getActionsApplier = reducer => (initState, actions) => actions.reduce(
   initState
 );
 
+const clearAction = action => (action.type === 'PERFORM_ACTION' ? action.action : action); // https://github.com/zalmoxisus/redux-devtools-instrument/blob/master/src/instrument.js#L41
+
 const createStoreCreator = ({
   actionHistorySize = 1000
 } = {}) => {
@@ -73,11 +75,11 @@ const createStoreCreator = ({
         lastState = reducer(lastState, history[0]);
         history.shift();
       }
-      if (action.type !== REPLACE_STATE_ACTION) history.push(action);
-
-      if (action.type === UNDO_ACTION) {
-        if (action.test) {
-          const actionsToApply = history.filter(a => !action.test(a));
+      const clearedAction = clearAction(action);
+      if (clearedAction.type !== REPLACE_STATE_ACTION) history.push(action);
+      if (clearedAction.type === UNDO_ACTION) {
+        if (clearedAction.test) {
+          const actionsToApply = history.filter(a => !clearedAction.test(clearAction(a)));
           if (actionsToApply.length) {
             const newState = applyActions(lastState, actionsToApply);
             originDispatch(replaceState(newState));
