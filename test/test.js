@@ -1,6 +1,6 @@
 import produce from 'immer';
 
-import createStoreCreator, { undoAction } from './index';
+import createStoreCreator, { undoAction } from '../index';
 
 const INC = 'INC';
 const DEC = 'DEC';
